@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ShermansLittleSecretWardrobe.Models;
 
 namespace ShermansLittleSecretWardrobe.Data
 {
@@ -9,5 +10,6 @@ namespace ShermansLittleSecretWardrobe.Data
             : base(options)
         {
         }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Product>? Product { get; set; }
     }
 }
