@@ -16,7 +16,7 @@ namespace ShermansLittleSecretWardrobe.Utils
             var blob = blobContainerClient.GetBlobClient(blobName); // Create a new BlobClient object by appending blobName to the end of Uri. 
             fileStream.Position = 0; // Stream is one way, data is written till the end, so position need to be reset to the start for pointer to read
             // Upload the file
-            await blob.UploadAsync(fileStream);
+            await blob.UploadAsync(fileStream, overwrite: true);
 
             return await Task.FromResult(true);
         }

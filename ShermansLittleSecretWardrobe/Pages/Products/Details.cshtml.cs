@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Utils;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
     public class DetailsModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webEnv;
 
-        public DetailsModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
+        public DetailsModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context, IWebHostEnvironment webEnv)
         {
             _context = context;
+            _webEnv = webEnv;
         }
 
       public Product Product { get; set; } = default!; 
@@ -36,6 +39,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             else 
             {
                 Product = product;
+
+                // Download image of product
+                await FileManagement.RetrieveFileFromStorage(Product, "product-images", _webEnv);
             }
             return Page();
         }
