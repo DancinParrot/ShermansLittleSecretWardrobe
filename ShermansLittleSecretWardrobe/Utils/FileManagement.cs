@@ -14,18 +14,27 @@ namespace ShermansLittleSecretWardrobe.Utils
             // Create the blob client.
             var blobContainerClient = new BlobContainerClient(blobStorageConnectionString, blobStorageContainerName);
             var blob = blobContainerClient.GetBlobClient(blobName); // Create a new BlobClient object by appending blobName to the end of Uri. 
-            fileStream.Position = 0;
+            fileStream.Position = 0; // Stream is one way, data is written till the end, so position need to be reset to the start for pointer to read
             // Upload the file
             await blob.UploadAsync(fileStream);
 
             return await Task.FromResult(true);
         }
 
-        public static async Task<bool> RetrieveFileFromStorage(Product product, string blobStorageContainerName)
+        public static async Task<bool> RetrieveFileFromStorage(Product Product, string blobStorageContainerName, IWebHostEnvironment webEnv)
         {
             // Create the blob client.
             var blobContainerClient = new BlobContainerClient(blobStorageConnectionString, blobStorageContainerName);
-            
+
+            // Create a local file in the ./data/ directory for uploading and downloading
+            string localPath = Path.Combine(webEnv.WebRootPath, "data");
+            Directory.CreateDirectory(localPath); // Create directory if !exist, otherwise ignore
+            string fileName = Product.Image;
+            string localFilePath = Path.Combine(localPath, fileName);
+
+            var blob = blobContainerClient.GetBlobClient(fileName); // Create a new BlobClient object by appending blobName to the end of Uri. 
+            // Download the blob's contents and save it to a file
+            await blob.DownloadToAsync(localFilePath);
 
             return await Task.FromResult(true);
         }

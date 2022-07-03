@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Utils;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
     public class EditModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webEnv;
 
-        public EditModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
+        public EditModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context, IWebHostEnvironment webEnv)
         {
             _context = context;
+            _webEnv = webEnv;
         }
 
         [BindProperty]
@@ -29,13 +32,18 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             {
                 return NotFound();
             }
-
+                
             var product =  await _context.Product.FirstOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
             {
                 return NotFound();
             }
+
             Product = product;
+
+            // Download image of product
+            await FileManagement.RetrieveFileFromStorage(Product, "product-images", _webEnv);
+
             return Page();
         }
 

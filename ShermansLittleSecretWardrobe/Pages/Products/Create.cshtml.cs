@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,12 +45,15 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
                 using (var memoryStream = new MemoryStream())
                 {
                     await Product.ImageFile.CopyToAsync(memoryStream);
-
-                    // Upload to Azure Blob Storage
-                    await FileManagement.UploadFileToStorage(memoryStream, Product.ProductId.ToString() + Path.GetExtension(Product.ImageFile.FileName), "product-images");
+                    String fileName = Regex.Replace(Product.Title, @"\s+", "") + Path.GetExtension(Product.ImageFile.FileName);
+                    // Upload to Azure Blob Storage (Strip white space off product name to set as image name)
+                    await FileManagement.UploadFileToStorage(memoryStream, fileName, "product-images");
 
                     // Set image attribute in Product object
-                    Product.Image = Product.ProductId.ToString() + Path.GetExtension(Product.ImageFile.FileName);
+                    Product.Image = fileName;
+
+                    // Clear memory stream
+                    memoryStream.SetLength(0);
                 }
 
                 /*Directory.CreateDirectory(Path.Combine(_hostenvironment.ContentRootPath, "uploadfiles")); // Will automatically check for existence of directory
