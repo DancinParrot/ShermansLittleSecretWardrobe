@@ -38,5 +38,26 @@ namespace ShermansLittleSecretWardrobe.Utils
 
             return await Task.FromResult(true);
         }
+
+        public static async void DeleteFileFromStorage(Product Product, string blobStorageContainerName, IWebHostEnvironment webEnv)
+        {
+            // Create the blob client.
+            var blobContainerClient = new BlobContainerClient(blobStorageConnectionString, blobStorageContainerName);
+
+            string localPath = Path.Combine(webEnv.WebRootPath, "data");
+            string fileName = Product.Image;
+            string localFilePath = Path.Combine(localPath, fileName);
+
+            var blob = blobContainerClient.GetBlobClient(fileName); // Find the blob on Azure Blob Storage
+
+            // Delete the blob from Azure Blob Storage
+            await blob.DeleteIfExistsAsync();
+
+            // Delete the image from webroot's data folder
+            if (File.Exists(localFilePath))
+            {
+                File.Delete(localFilePath);
+            }
+        }
     }
 }

@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Utils;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
     public class DeleteModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webEnv;
 
-        public DeleteModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
+        public DeleteModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context, IWebHostEnvironment webEnv)
         {
             _context = context;
+            _webEnv = webEnv;
         }
 
         [BindProperty]
@@ -53,6 +56,10 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             if (product != null)
             {
                 Product = product;
+                // Delete image from both Azure Blob Storage and Webroot folder
+                FileManagement.DeleteFileFromStorage(product, "product-images", _webEnv);
+
+                // Delete from DB
                 _context.Product.Remove(Product);
                 await _context.SaveChangesAsync();
             }
