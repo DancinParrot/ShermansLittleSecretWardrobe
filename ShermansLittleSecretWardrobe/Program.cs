@@ -3,15 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ShermansLittleSecretWardrobeContextConnection") ?? throw new InvalidOperationException("Connection string 'ShermansLittleSecretWardrobeContextConnection' not found.");
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContext<ShermansLittleSecretWardrobeContext>(options =>
+    options.UseSqlServer(connectionString));;
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ShermansLittleSecretWardrobeContext>();;
+
+// Add services to the container.
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -39,3 +42,7 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
+
+
+//> dotnet ef migrations add [migration name]
+//d> dotnet ef database update
