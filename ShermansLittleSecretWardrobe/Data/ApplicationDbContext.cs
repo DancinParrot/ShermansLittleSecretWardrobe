@@ -11,5 +11,8 @@ namespace ShermansLittleSecretWardrobe.Data
         {
         }
         public DbSet<ShermansLittleSecretWardrobe.Models.Product>? Product { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicatioinRole { get; set; }
+
     }
 }

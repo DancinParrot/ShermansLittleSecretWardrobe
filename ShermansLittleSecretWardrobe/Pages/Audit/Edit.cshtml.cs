@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Data;
 
 namespace ShermansLittleSecretWardrobe.Pages.Audit
 {
     public class EditModel : PageModel
     {
-        private readonly ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext _context;
+        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
 
-        public EditModel(ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext context)
+        public EditModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -25,12 +25,12 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.AuditRecords == null)
+            if (id == null || _context.AuditRecord == null)
             {
                 return NotFound();
             }
 
-            var auditrecord =  await _context.AuditRecords.FirstOrDefaultAsync(m => m.Audit_ID == id);
+            var auditrecord =  await _context.AuditRecord.FirstOrDefaultAsync(m => m.Audit_ID == id);
             if (auditrecord == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 
         private bool AuditRecordExists(int id)
         {
-          return (_context.AuditRecords?.Any(e => e.Audit_ID == id)).GetValueOrDefault();
+          return (_context.AuditRecord?.Any(e => e.Audit_ID == id)).GetValueOrDefault();
         }
     }
 }
