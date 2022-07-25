@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using ShermansLittleSecretWardrobe.Models;
 
 namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
 {

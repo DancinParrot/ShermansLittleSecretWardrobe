@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
-using Microsoft.AspNetCore.Authorization;
 
-namespace ShermansLittleSecretWardrobe.Pages.Products
+namespace ShermansLittleSecretWardrobe.Pages.Roles
 {
-    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
@@ -21,13 +19,13 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             _context = context;
         }
 
-        public IList<Product> Product { get;set; } = default!;
+        public IList<ApplicationRole> ApplicationRole { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Product != null)
+            if (_context.ApplicationRoles != null)
             {
-                Product = await _context.Product.ToListAsync();
+                ApplicationRole = await _context.ApplicationRoles.ToListAsync();
             }
         }
     }
