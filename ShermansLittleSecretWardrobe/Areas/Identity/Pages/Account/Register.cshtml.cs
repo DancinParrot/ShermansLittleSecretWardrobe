@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ShermansLittleSecretWardrobe.Models;
 
 namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
 {
