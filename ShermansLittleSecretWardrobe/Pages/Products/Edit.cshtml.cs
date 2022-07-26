@@ -10,11 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Utils;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
-    [Authorize(Roles = "Admin, Users")]
     public class EditModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
