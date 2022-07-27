@@ -210,7 +210,7 @@ ul {
 }
 .center {
     position: absolute;
-    top: 5%;
+    top: 10%;
     left: 10%;
     transform: translate(-50%, -50%);
     font-weight: bold;

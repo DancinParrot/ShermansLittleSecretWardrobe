@@ -1,8 +1,189 @@
 ﻿@page
-@model FeedbackModel
+@model ShermansLittleSecretWardrobe.Pages.FeedbackModel
 @{
     ViewData["Title"] = "Feedback";
 }
 <h1>@ViewData["Title"]</h1>
+ 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
 
-<p>Hi.</p>
+* {
+    box-sizing: border-box;
+}
+
+
+.form {
+    padding: 30px 40px;
+
+}
+
+.form-control {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+    .form-control label {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .form-control input {
+        border: 2px solid #f0f0f0;
+        border-radius: 4px;
+        display: block;
+        font-family: inherit;
+        font-size: 14px;
+        padding: 10px;
+        width: 100%;
+    }
+
+        .form-control input:focus {
+            outline: 0;
+            border-color: #777;
+        }
+
+    .form-control.success input {
+        border-color: #2ecc71;
+    }
+
+    .form-control.error input {
+        border-color: #e74c3c;
+    }
+
+    .form-control i {
+        visibility: hidden;
+        position: absolute;
+        top: 40px;
+        right: 10px;
+    }
+
+    .form-control.success i.fa-check-circle {
+        color: #2ecc71;
+        visibility: visible;
+    }
+
+    .form-control.error i.fa-exclamation-circle {
+        color: #e74c3c;
+        visibility: visible;
+    }
+
+    .form-control small {
+        color: #e74c3c;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        visibility: hidden;
+    }
+
+    .form-control.error small {
+        visibility: visible;
+    }
+
+.form button {
+    background-color: #8e44ad;
+    border: 2px solid #8e44ad;
+    border-radius: 4px;
+    color: #fff;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+
+.floating-btn {
+    border-radius: 26.5px;
+    background-color: #001F61;
+    border: 1px solid #001F61;
+    box-shadow: 0 16px 22px -17px #03153B;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 12px 20px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+    .floating-btn:hover {
+        background-color: #ffffff;
+        color: #001F61;
+    }
+
+    .floating-btn:focus {
+        outline: none;
+    }
+
+.floating-text {
+    background-color: #001F61;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    font-family: 'Muli';
+    padding: 7px 15px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 998;
+}
+.floating-text a {
+        color: #FF7500;
+        text-decoration: none;
+}
+.containers {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 400px;
+    max-width: 100%;
+}
+
+
+</style>
+<div class="containers">
+    <div class="header">
+    </div>
+    <form method="POST">
+        <div class="form-control">
+            <label for="fname">First Name</label>
+            <input type="text" placeholder="Sherman" id="fname" required/>
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="form-control">
+            <label for="lname">Last Name</label>
+            <input type="text" placeholder="Chong" id="lname" required />
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="form-control">
+            <label for="email">Email</label>
+            <input type="email" placeholder="shermanchong@connect.np.edu.sg" id="email" required />
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+            <div class="form-control">
+            <label for="message">Message</label></br>
+            <textarea id="message" name="message"  rows="4" cols="45" required></textarea>
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+            </div>
+        <input type="submit" value="Submit" id="Submit">
+        <input type="reset" value="Reset">
+    </form>
+</div>
+
+<script>
+    $("#Submit").click(function() {
+        alert("@Model.firstName @Model.lastName Feedback form has been Submitted.");
+    });
+</script>
