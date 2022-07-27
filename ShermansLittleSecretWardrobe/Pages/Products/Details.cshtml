@@ -47,6 +47,9 @@
         <dd class="col-sm-10">
             <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="300px" />
         </dd>
+        <dd class="col-sm-10">
+            <a asp-page="cart" asp-page-handler="buynow" asp-route-id="@Model.Product.ProductId">Buy Now</a>
+        </dd>
     </dl>
 </div>
 <div>
