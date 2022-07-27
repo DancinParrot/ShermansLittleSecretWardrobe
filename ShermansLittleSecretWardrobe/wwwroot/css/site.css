@@ -132,6 +132,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    background: radial-gradient(#fff,#ffd6d6);
 }
 
 p {
