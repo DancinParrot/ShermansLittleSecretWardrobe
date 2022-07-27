@@ -68,7 +68,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
 
                 // Create an auditrecord object
                 var auditrecord = new AuditRecord();
-                auditrecord.AuditActionType = "Delete Movie Record";
+                auditrecord.AuditActionType = "Delete Product";
                 auditrecord.DateTimeStamp = DateTime.Now;
                 auditrecord.ProductID = Product.ProductId;
                 // Get current logged-in user

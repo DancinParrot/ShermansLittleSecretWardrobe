@@ -102,7 +102,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
    
             // Create an auditrecord object
             var auditrecord = new AuditRecord();
-            auditrecord.AuditActionType = "Modify Movie Record";
+            auditrecord.AuditActionType = "Modify Product";
             auditrecord.DateTimeStamp = DateTime.Now;
             auditrecord.ProductID = Product.ProductId;
             // Get current logged-in user
