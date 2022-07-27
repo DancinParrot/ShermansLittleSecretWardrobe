@@ -16,6 +16,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+/*builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Roles", "RequireAdministratorRole");
+});*/
+
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -31,6 +36,12 @@ builder.Services.AddIdentity<IdentityUser, ApplicationRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
+/*builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdministratorRole",
+         policy => policy.RequireRole("Admin"));
+});*/
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
