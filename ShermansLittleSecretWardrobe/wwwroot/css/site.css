@@ -208,12 +208,10 @@ ul {
     position: relative;
     float:left;
 }
-.text-block {
+.center {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: black;
-    color: yellow;
-    padding-left: 20px;
-    padding-right: 20px;
+    top: 5%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
 }
