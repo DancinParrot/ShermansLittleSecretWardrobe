@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Models.Interfaces;
+using ShermansLittleSecretWardrobe.Models.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,8 @@ builder.Services.AddIdentity<IdentityUser, ApplicationRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
+
+builder.Services.AddScoped<IShop, ShopManager>();
 
 
 var app = builder.Build();

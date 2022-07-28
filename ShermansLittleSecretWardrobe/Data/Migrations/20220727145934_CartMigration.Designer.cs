@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShermansLittleSecretWardrobe.Data;
 
@@ -11,9 +12,10 @@ using ShermansLittleSecretWardrobe.Data;
 namespace ShermansLittleSecretWardrobe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220727145934_CartMigration")]
+    partial class CartMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,32 +277,6 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.ToTable("Cart");
                 });
 
-            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItems", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("CartID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("CartItems");
-                });
-
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -387,25 +363,6 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItems", b =>
-                {
-                    b.HasOne("ShermansLittleSecretWardrobe.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShermansLittleSecretWardrobe.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
