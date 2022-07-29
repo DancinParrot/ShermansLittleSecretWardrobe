@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Roles
 {
+    [Authorize(Roles = "Admin")]
     public class ManageModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
