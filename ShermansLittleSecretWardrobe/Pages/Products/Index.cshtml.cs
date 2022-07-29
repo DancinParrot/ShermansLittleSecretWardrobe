@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
@@ -23,12 +24,30 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
         }
 
         public IList<Product> Product { get;set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SearchTitle { get; set; }
 
         public async Task OnGetAsync()
         {
             if (_context.Product != null)
             {
-                Product = await _context.Product.ToListAsync();
+                var products = from p in _context.Product
+                             select p;
+
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    products = products.Where(s => s.Category.Equals(SearchString));
+                }
+
+                if (!string.IsNullOrEmpty(SearchTitle))
+                {
+                    products = products.Where(s => s.Title.Contains(SearchTitle));
+                }
+
+                Product = await products.ToListAsync();
 
                 foreach (var product in Product)
                 {

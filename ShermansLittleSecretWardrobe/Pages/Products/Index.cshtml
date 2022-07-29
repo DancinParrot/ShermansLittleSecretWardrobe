@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{searchString?}"
 @model ShermansLittleSecretWardrobe.Pages.Products.IndexModel
 
 @{
@@ -18,6 +18,29 @@
     <h1 class="display-4">View our Collection</h1>
 </div>
 
+<div class="row">
+    <form class="col-sm">
+       <div style="display: flex; flex-direction: row;">
+            <p>Title: <input style="max-height: 100%;" type="text" asp-for="SearchTitle" />
+                <input class="btn btn-primary" type="submit" value="Search" asp-for="SearchTitle" />
+            </p>
+        </div>
+    </form>
+
+    <form class="col-sm">
+        <div style="display: flex; justify-content: flex-end;">
+            <select id="category" class="form-control" style="width: 50%;" asp-for="SearchString" onchange="javascript:this.form.submit()">
+                <option value="" disabled selected>Fiter by category</option>
+                <option value="T-Shirt">T-Shirt</option>
+                <option value="PoloShirt">Polo Shirt</option>
+                <option value="CasualShirt">Casual Shirt</option>
+                <option value="Sweater">Sweater</option>
+            </select>
+        </div>
+    </form>
+</div>
+
+
 <div class="card-columns">
     @foreach (var item in Model.Product) 
     {
@@ -27,6 +50,9 @@
                 <h5 class="card-title">@item.Title</h5>
             </div>
             <div class="card-footer">
+@*                <form method="post">
+                    <button type="submit" class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">Submit</button>
+                </form>*@
                 <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">View</a>
             </div>
         </div>
