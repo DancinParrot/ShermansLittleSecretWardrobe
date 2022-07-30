@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ShermansLittleSecretWardrobe.Models;
 
 namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
 {
@@ -21,11 +22,14 @@ namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, 
+            ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -117,6 +121,19 @@ namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+                
+                else
+                {
+                    //Create audit record when login attempt failed
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Failed Login";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.ProductID = 999;    //999 = dummy record
+                    auditrecord.Username = Input.Email;
+                    _context.AuditRecord.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
+                
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });

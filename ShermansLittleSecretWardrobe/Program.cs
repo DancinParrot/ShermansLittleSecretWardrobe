@@ -1,19 +1,35 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
+using ShermansLittleSecretWardrobe.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    ApplicationName = typeof(Program).Assembly.FullName,
+    ContentRootPath = Path.GetFullPath(Directory.GetCurrentDirectory()),
+    WebRootPath = "wwwroot",
+    Args = args
+});
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+//  .AddEntityFrameworkStores<ApplicationDbContext>();
+
+  //  .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 // Add services to the container.
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+/*builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Roles", "RequireAdministratorRole");
+});*/
 
 builder.Services.AddRazorPages();
 
@@ -24,6 +40,33 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 });
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    // Changed requiredlength to 8
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+
+builder.Services.AddIdentity<IdentityUser, ApplicationRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
+
+
+/*builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdministratorRole",
+         policy => policy.RequireRole("Admin"));
+});*/
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

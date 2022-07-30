@@ -10,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
+    [Authorize(Roles = "Admin, Users")]
     public class EditModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
@@ -98,7 +100,19 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
                     throw;
                 }
             }
-
+            // Once a record is modified, create an audit record
+   
+            // Create an auditrecord object
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Modify Product";
+            auditrecord.DateTimeStamp = DateTime.Now;
+            auditrecord.ProductID = Product.ProductId;
+            // Get current logged-in user
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            _context.AuditRecord.Add(auditrecord);
+            await _context.SaveChangesAsync();
+            
             return RedirectToPage("./Index");
         }
 

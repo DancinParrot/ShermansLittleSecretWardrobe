@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
@@ -62,10 +58,22 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
                     await Product.ImageFile.CopyToAsync(stream);
                 }*/
             }
-
             _context.Product.Add(Product);
-            await _context.SaveChangesAsync();
-
+            //await _context.SaveChangesAsync();
+            // Once a record is added, create an audit record
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Add Product";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.ProductID = Product.ProductId;
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                _context.AuditRecord.Add(auditrecord);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToPage("./Index");
         }
     }
