@@ -3,12 +3,30 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="user-dropdown" role="button" aria-expanded="false">
+            Hello @User.Identity?.Name!
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+
+            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Account</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="dropdown-item" href="/Admin">Admin Panel</a>
+            }
+            else 
+            {
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="/Orders/Index">View Orders</a></li>
+                <li><a class="dropdown-item" href="/Contact">Contact Support</a></li>
+            }
+        </ul>
     </li>
+
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -25,3 +43,4 @@ else
     </li>
 }
 </ul>
+

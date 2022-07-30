@@ -211,3 +211,13 @@ body {
     display: inline-block;
     margin: 10px;
 }
+
+/*https://stackoverflow.com/questions/20530021/bootstrap-dropdown-menu-not-working-within-layout-cshtml-shared-in-mvc-4*/
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu {
+    margin-top: 0;
+}  

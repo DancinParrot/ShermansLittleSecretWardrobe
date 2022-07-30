@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ShermansLittleSecretWardrobe.Models;
 
 namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
@@ -20,11 +22,13 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
         }
 
         [BindProperty]
-      public Order Order { get; set; } = default!;
+        public Order Order { get; set; } = default!;
+        [BindProperty]
+        public Shipping Shipping { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Order == null)
+            if (id == null || _context.Order == null || _context.Shipping == null)
             {
                 return NotFound();
             }
@@ -38,13 +42,22 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
             else 
             {
                 Order = order;
+
+                var shipping = await _context.Shipping.FindAsync(Order.ShippingId);
+
+                if (shipping != null)
+                {
+                    Shipping = shipping;
+
+                }
+
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Order == null)
+            if (id == null || _context.Order == null || _context.Shipping == null)
             {
                 return NotFound();
             }
@@ -53,10 +66,18 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
             if (order != null)
             {
                 Order = order;
-                _context.Order.Remove(Order);
-                await _context.SaveChangesAsync();
-            }
 
+                var shipping = await _context.Shipping.FindAsync(Order.ShippingId);
+
+                if (shipping != null)
+                {
+                    Shipping = shipping;
+
+
+                    _context.Order.Remove(Order);
+                    await _context.SaveChangesAsync();
+                }
+            }
             return RedirectToPage("./Index");
         }
     }
