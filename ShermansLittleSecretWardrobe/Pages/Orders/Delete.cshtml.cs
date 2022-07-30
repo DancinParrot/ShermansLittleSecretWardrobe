@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 
-namespace ShermansLittleSecretWardrobe.Pages.Audit
+namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
     public class DeleteModel : PageModel
     {
@@ -20,40 +20,40 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
         }
 
         [BindProperty]
-      public AuditRecord AuditRecord { get; set; } = default!;
+      public Order Order { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.AuditRecord == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
 
-            var auditrecord = await _context.AuditRecord.FirstOrDefaultAsync(m => m.Audit_ID == id);
+            var order = await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
 
-            if (auditrecord == null)
+            if (order == null)
             {
                 return NotFound();
             }
             else 
             {
-                AuditRecord = auditrecord;
+                Order = order;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.AuditRecord == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
-            var auditrecord = await _context.AuditRecord.FindAsync(id);
+            var order = await _context.Order.FindAsync(id);
 
-            if (auditrecord != null)
+            if (order != null)
             {
-                AuditRecord = auditrecord;
-                _context.AuditRecord.Remove(AuditRecord);
+                Order = order;
+                _context.Order.Remove(Order);
                 await _context.SaveChangesAsync();
             }
 

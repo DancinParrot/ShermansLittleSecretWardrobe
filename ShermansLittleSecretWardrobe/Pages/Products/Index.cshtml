@@ -18,7 +18,9 @@
     <h1 class="display-4">View our Collection</h1>
 </div>
 
-<div class="row">
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="row">
     <form class="col-sm">
        <div style="display: flex; flex-direction: row;">
             <p>Title: <input style="max-height: 100%;" type="text" asp-for="SearchTitle" />
@@ -40,6 +42,7 @@
     </form>
 </div>
 
+}
 
 <div class="card-columns">
     @foreach (var item in Model.Product) 
@@ -54,6 +57,15 @@
                     <button type="submit" class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">Submit</button>
                 </form>*@
                 <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">View</a>
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-page="../ShoppingCart" asp-route-id="@item.ProductId" asp-route-qty="1">Buy</a>
+                }
+                @if(User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                }
             </div>
         </div>
     }

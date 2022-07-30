@@ -8,4 +8,5 @@ namespace ShermansLittleSecretWardrobe.Models
         public DateTime CreatedDate { get; set; }
         public string IPAddress { get; set; }
     }
+
 }

@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Data;
+using ShermansLittleSecretWardrobe.Models;
 
-namespace ShermansLittleSecretWardrobe.Pages.Audit
+namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
     public class EditModel : PageModel
     {
@@ -21,21 +21,21 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
         }
 
         [BindProperty]
-        public AuditRecord AuditRecord { get; set; } = default!;
+        public Order Order { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.AuditRecord == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
 
-            var auditrecord =  await _context.AuditRecord.FirstOrDefaultAsync(m => m.Audit_ID == id);
-            if (auditrecord == null)
+            var order =  await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
+            if (order == null)
             {
                 return NotFound();
             }
-            AuditRecord = auditrecord;
+            Order = order;
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
                 return Page();
             }
 
-            _context.Attach(AuditRecord).State = EntityState.Modified;
+            _context.Attach(Order).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuditRecordExists(AuditRecord.Audit_ID))
+                if (!OrderExists(Order.OrderId))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
             return RedirectToPage("./Index");
         }
 
-        private bool AuditRecordExists(int id)
+        private bool OrderExists(int id)
         {
-          return (_context.AuditRecord?.Any(e => e.Audit_ID == id)).GetValueOrDefault();
+          return (_context.Order?.Any(e => e.OrderId == id)).GetValueOrDefault();
         }
     }
 }

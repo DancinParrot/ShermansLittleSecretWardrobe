@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 
-namespace ShermansLittleSecretWardrobe.Pages.Audit
+namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
     public class CreateModel : PageModel
     {
@@ -25,18 +25,17 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
         }
 
         [BindProperty]
-        public AuditRecord AuditRecord { get; set; } = default!;
+        public Order Order { get; set; } = default!;
         
-
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.AuditRecord == null || AuditRecord == null)
+          if (!ModelState.IsValid || _context.Order == null || Order == null)
             {
                 return Page();
             }
 
-            _context.AuditRecord.Add(AuditRecord);
+            _context.Order.Add(Order);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

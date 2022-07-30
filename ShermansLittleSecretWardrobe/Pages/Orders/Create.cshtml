@@ -1,0 +1,95 @@
+﻿@page
+@model ShermansLittleSecretWardrobe.Pages.Orders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Order.CartId" class="control-label"></label>
+                <input asp-for="Order.CartId" class="form-control" />
+                <span asp-validation-for="Order.CartId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.OrderStatus" class="control-label"></label>
+                <input asp-for="Order.OrderStatus" class="form-control" />
+                <span asp-validation-for="Order.OrderStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.UserId" class="control-label"></label>
+                <input asp-for="Order.UserId" class="form-control" />
+                <span asp-validation-for="Order.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ShippingId" class="control-label"></label>
+                <input asp-for="Order.ShippingId" class="form-control" />
+                <span asp-validation-for="Order.ShippingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.CreationTimestamp" class="control-label"></label>
+                <input asp-for="Order.CreationTimestamp" class="form-control" />
+                <span asp-validation-for="Order.CreationTimestamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.PaymentTimestamp" class="control-label"></label>
+                <input asp-for="Order.PaymentTimestamp" class="form-control" />
+                <span asp-validation-for="Order.PaymentTimestamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.PaymentMethod" class="control-label"></label>
+                <input asp-for="Order.PaymentMethod" class="form-control" />
+                <span asp-validation-for="Order.PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.PaymentAmount" class="control-label"></label>
+                <input asp-for="Order.PaymentAmount" class="form-control" />
+                <span asp-validation-for="Order.PaymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h3>Make your Payment here via Paynow!</h3>
+                <div id="qrcode" style="margin-bottom: 10px;"></div>
+                <script>
+                    var tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate()+1);
+                    var dd = String(tomorrow.getDate()).padStart(2, '0');
+                    var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = tomorrow.getFullYear();
+
+                    tomorrow = yyyy + mm + dd;
+                    console.log(tomorrow);
+                    const opts = {
+                        uen: '+6592768381', // Merchant's Paynow ID
+                        editable: 0, // Amount non-editable
+                        expiry: tomorrow, // Expiry date of today
+                        amount: 10,
+                        refNumber: '1'
+                    };
+                </script>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" src="~/lib/davidshimjs-qrcodejs/qrcode.js"></script>
+    <script type="text/javascript" src="~/js/paynow.js"></script>
+    <script type="text/javascript" src="~/js/qr.js"></script>
+}
