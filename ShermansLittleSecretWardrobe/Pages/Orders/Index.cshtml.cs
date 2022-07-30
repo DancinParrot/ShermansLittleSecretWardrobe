@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 
-namespace ShermansLittleSecretWardrobe.Pages.Roles
+namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
     public class IndexModel : PageModel
     {
@@ -22,13 +19,13 @@ namespace ShermansLittleSecretWardrobe.Pages.Roles
             _context = context;
         }
 
-        public IList<ApplicationRole> ApplicationRole { get;set; } = default!;
+        public IList<Order> Order { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.ApplicationRoles != null)
+            if (_context.Order != null)
             {
-                ApplicationRole = await _context.ApplicationRoles.ToListAsync();
+                Order = await _context.Order.ToListAsync();
             }
         }
     }

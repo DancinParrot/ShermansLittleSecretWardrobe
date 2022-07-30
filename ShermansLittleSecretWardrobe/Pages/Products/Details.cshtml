@@ -1,11 +1,54 @@
-﻿@page
+﻿@page "{id:int?}"
 @model ShermansLittleSecretWardrobe.Pages.Products.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="300px" />
+        </div>
+        <div class="col-sm">
+            <div class="row">
+                <h6>Name:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Title</p>
+            </div>
+            <div class="row">
+                <h6>Category:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Category</p>
+            </div>
+            <div class="row">
+                <h6>Price:&nbsp;&nbsp;</h6>
+                <p>$@Model.Product.Price</p>
+            </div>
+            <div class="row">
+                <h6>Description:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Description</p>
+            </div>
+            <div class="row">
+@*                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form method="post">
+                        <div>
+                            <label asp-for="Input.Quantity">Quantity&nbsp;&nbsp;</label>
+                            <input asp-for="Input.Quantity" type="text">
+                            <p>&nbsp;</p>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                }*@
+            </div>
+        </div>
+    </div>
+@*    @if (SignInManager.IsSignedIn(User))
+    {
+        @await Component.InvokeAsync("MiniCart")
+    }*@
+</div>
+
+@*<h1>Details</h1>
 
 <div>
     <h4>Product</h4>
@@ -52,4 +95,4 @@
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Product?.ProductId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
-</div>
+</div>*@

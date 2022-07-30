@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
+    [AllowAnonymous]
     public class DetailsModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
@@ -22,7 +24,28 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             _webEnv = webEnv;
         }
 
-      public Product Product { get; set; } = default!; 
+        public Product Product { get; set; } = default!; 
+
+/*        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null || _context.Product == null)
+            {
+                return NotFound();
+            }
+            var product = await _context.Product.FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                Product = product;
+
+                // Download image of product
+                await FileManagement.RetrieveFileFromStorage(Product, "product-images", _webEnv);
+            }
+            return Page();
+        }*/
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,7 +59,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Product = product;
 
