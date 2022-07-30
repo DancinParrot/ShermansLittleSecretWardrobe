@@ -4,6 +4,17 @@
 @{
     ViewData["Title"] = "Receipt";
 }
+<head>
+    <link rel="stylesheet" href="~/css/reset.css" />
+
+</head>
+
+<style>
+    html {
+        font-family: "Segoe UI";
+    }
+
+</style>
 
 <div class="container">
     <h1>Receipt</h1>
@@ -46,7 +57,7 @@
                                 <tr>
                                     <th>Item</th>
                                     <th>Product Number</th>
-                                    <th class="center">Qty</th>
+                                    <th>Qty</th>
                                     <th class="right">Price</th>
                                 </tr>
                             </thead>
@@ -54,7 +65,7 @@
                                 <tr>
                                     <td class="left strong">@Model.Product.Title</td>
                                     <td class="left">@Model.Product.ProductId</td>
-                                    <td class="center">1</td>
+                                    <td>1</td>
                                     <td class="right">@Model.Product.Price</td>
                                 </tr>
                             </tbody>

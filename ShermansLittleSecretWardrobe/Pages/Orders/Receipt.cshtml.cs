@@ -31,6 +31,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
                 return BadRequest();
             }
 
+
             if (_context.Order != null && _context.Shipping != null && _context.Product != null)
             {
                 var order = await _context.Order.FirstOrDefaultAsync(o => o.OrderId == orderId);
@@ -38,6 +39,18 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
                 if (order != null)
                 {
                     Order = order;
+
+                    IdentityUser user = await _userManager.GetUserAsync(User);
+
+                    // If user is not Admin, prevent them from accessing other users' receipts
+                    if (!User.IsInRole("Admin"))
+                    {
+                        if (Order.UserId != user.Id)
+                        {
+                            return NotFound();
+
+                        }
+                    }
 
                     var shipping = await _context.Shipping.FirstOrDefaultAsync(s => s.ShippingId == Order.ShippingId);
 
