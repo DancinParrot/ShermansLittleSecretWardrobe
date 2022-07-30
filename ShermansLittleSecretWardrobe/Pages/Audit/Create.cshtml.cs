@@ -12,9 +12,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 {
     public class CreateModel : PageModel
     {
-        private readonly ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext _context;
+        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
 
-        public CreateModel(ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext context)
+        public CreateModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -31,12 +31,12 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.AuditRecords == null || AuditRecord == null)
+          if (!ModelState.IsValid || _context.AuditRecord == null || AuditRecord == null)
             {
                 return Page();
             }
 
-            _context.AuditRecords.Add(AuditRecord);
+            _context.AuditRecord.Add(AuditRecord);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

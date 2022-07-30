@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace ShermansLittleSecretWardrobe.Models
 {
     public class AuditRecord
@@ -22,6 +21,6 @@ namespace ShermansLittleSecretWardrobe.Models
         //Time when the event occurred
         [Display(Name = "Product ID ")]
         public int ProductID { get; set; }
-        //Store the ID of Product that is affected
+        //Store the ID of movie record that is affected
     }
 }

@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using ShermansLittleSecretWardrobe.Data;
 
 namespace ShermansLittleSecretWardrobe.Pages.Audit
 {
     public class IndexModel : PageModel
     {
-        private readonly ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext _context;
+        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
 
-        public IndexModel(ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext context)
+        public IndexModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -23,9 +23,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 
         public async Task OnGetAsync()
         {
-            if (_context.AuditRecords != null)
+            if (_context.AuditRecord != null)
             {
-                AuditRecord = await _context.AuditRecords.ToListAsync();
+                AuditRecord = await _context.AuditRecord.ToListAsync();
             }
         }
     }

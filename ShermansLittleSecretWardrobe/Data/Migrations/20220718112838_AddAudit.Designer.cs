@@ -9,17 +9,17 @@ using ShermansLittleSecretWardrobe.Data;
 
 #nullable disable
 
-namespace ShermansLittleSecretWardrobe.Migrations
+namespace ShermansLittleSecretWardrobe.Data.Migrations
 {
-    [DbContext(typeof(ShermansLittleSecretWardrobeContext))]
-    [Migration("20220707141323_AddAudit")]
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20220718112838_AddAudit")]
     partial class AddAudit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -241,7 +241,7 @@ namespace ShermansLittleSecretWardrobe.Migrations
                     b.Property<DateTime>("DateTimeStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("KeyMovieFieldID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -250,7 +250,44 @@ namespace ShermansLittleSecretWardrobe.Migrations
 
                     b.HasKey("Audit_ID");
 
-                    b.ToTable("AuditRecords");
+                    b.ToTable("AuditRecord");
+                });
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
