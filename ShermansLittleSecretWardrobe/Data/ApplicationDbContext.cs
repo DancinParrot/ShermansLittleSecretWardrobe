@@ -13,6 +13,7 @@ namespace ShermansLittleSecretWardrobe.Data
         }
         public DbSet<ShermansLittleSecretWardrobe.Models.Product>? Product { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
+
         public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.Order>? Order { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.Cart>? Cart { get; set; }
