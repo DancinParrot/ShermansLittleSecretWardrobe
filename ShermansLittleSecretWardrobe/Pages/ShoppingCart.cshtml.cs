@@ -31,16 +31,34 @@ namespace ShermansLittleSecretWardrobe.Pages
         public CartItem CartItem { get; set; }
         public IList<CartItem> CartItems { get; set; } = default!;
 
-
-        public async Task<IActionResult> OnGetAsync(int? id, int qty)
+        public async Task<IActionResult> OnGetAsync(int? id, int? qty)
         {
-            if (id == null || _context.Product == null)
-            {
+            if (id == null || qty == null )
+            {                
+                // Means user access the cart directly
+                if (_context.Cart != null)
+                {
+                    // Get CartId from User
+                    IdentityUser user = await _userManager.GetUserAsync(User);
 
+                    var cart = await _context.Cart.FirstOrDefaultAsync(c => c.UserId == user.Id);
 
+                    if (cart != null)
+                    {
+                        Cart = cart;
+                        // List everything in the shopping cart of the user
+                        if (_context.CartItem != null)
+                        {
+                            CartItems = await _context.CartItem
+                                        .Where(c => c.CartId == Cart.CartId)
+                                        .ToListAsync();
+                        }
+                    }
+ 
+                }
             }
 
-            var product = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == id);
+/*            var product = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == id);
 
             if (product == null)
             {
@@ -81,7 +99,7 @@ namespace ShermansLittleSecretWardrobe.Pages
                     cartItem = new CartItem();
                     cartItem.ProductId = Product.ProductId;
                     cartItem.CartId = Cart.CartId;
-                    cartItem.ItemCount = qty;
+                    cartItem.ItemCount = 1;
 
                     _context.CartItem.Add(cartItem);
                     await _context.SaveChangesAsync();
@@ -89,7 +107,7 @@ namespace ShermansLittleSecretWardrobe.Pages
                 else
                 {
                     // If exists, add the quantity only
-                    cartItem.ItemCount += qty;
+                    cartItem.ItemCount += 1;
                 }
 
                 CartItem = cartItem;
@@ -98,7 +116,7 @@ namespace ShermansLittleSecretWardrobe.Pages
                 CartItems = await _context.CartItem
                     .Where(c => c.CartId == Cart.CartId)
                     .ToListAsync();
-            }
+            }*/
             
             /*if (id == null || _context.Cart == null)
             {

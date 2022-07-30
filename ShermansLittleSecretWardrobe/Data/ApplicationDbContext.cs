@@ -52,6 +52,8 @@ namespace ShermansLittleSecretWardrobe.Data
         public DbSet<ShermansLittleSecretWardrobe.Models.Order>? Order { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.Cart>? Cart { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.CartItem>? CartItem { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Shipping>? Shipping { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
+
     }
 }

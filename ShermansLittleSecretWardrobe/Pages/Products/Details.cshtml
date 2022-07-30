@@ -28,6 +28,15 @@
                 <p>@Model.Product.Description</p>
             </div>
             <div class="row">
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-page="../Orders/Create" asp-route-productId="@Model.Product.ProductId">Buy</a>
+                }
+                @if(User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@Model.Product.ProductId">Delete</a>
+                }
 @*                @if (SignInManager.IsSignedIn(User))
                 {
                     <form method="post">
