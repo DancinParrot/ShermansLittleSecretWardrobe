@@ -25,7 +25,7 @@ namespace ShermansLittleSecretWardrobe.Models
         [RegularExpression(@"^[0-9.]+$", ErrorMessage = "Please only enter alphanumerical, and \".\", only.")]
         public decimal? PaymentAmount { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-ZZ0-9]{1,8}$")]
+        [RegularExpression(@"^[a-zA-ZZ0-9]{1,15}$")]
         public string? ReferenceId { get; set; }
 
     }
