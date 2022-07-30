@@ -67,7 +67,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RequireAdministratorRole",
          policy => policy.RequireRole("Admin"));
     options.AddPolicy("RequireAuthentication",
-        policy => policy.RequireRole("User"));
+        policy => policy.RequireAuthenticatedUser());
 });
 /*builder.Services.AddAuthorization();*/
 

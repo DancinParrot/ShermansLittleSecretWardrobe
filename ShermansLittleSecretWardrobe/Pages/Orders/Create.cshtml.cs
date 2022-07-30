@@ -8,7 +8,6 @@ using ShermansLittleSecretWardrobe.Utils;
 
 namespace ShermansLittleSecretWardrobe.Pages.Orders
 {
-    [Authorize(Roles = "Admin, User")]
     public class CreateModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
