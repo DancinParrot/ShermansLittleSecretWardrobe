@@ -12,9 +12,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 {
     public class DeleteModel : PageModel
     {
-        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
+        private readonly ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext _context;
 
-        public DeleteModel(ShermansLittleSecretWardrobe.Data.ApplicationDbContext context)
+        public DeleteModel(ShermansLittleSecretWardrobe.Data.ShermansLittleSecretWardrobeContext context)
         {
             _context = context;
         }
@@ -24,12 +24,12 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.AuditRecord == null)
+            if (id == null || _context.AuditRecords == null)
             {
                 return NotFound();
             }
 
-            var auditrecord = await _context.AuditRecord.FirstOrDefaultAsync(m => m.Audit_ID == id);
+            var auditrecord = await _context.AuditRecords.FirstOrDefaultAsync(m => m.Audit_ID == id);
 
             if (auditrecord == null)
             {
@@ -44,16 +44,16 @@ namespace ShermansLittleSecretWardrobe.Pages.Audit
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.AuditRecord == null)
+            if (id == null || _context.AuditRecords == null)
             {
                 return NotFound();
             }
-            var auditrecord = await _context.AuditRecord.FindAsync(id);
+            var auditrecord = await _context.AuditRecords.FindAsync(id);
 
             if (auditrecord != null)
             {
                 AuditRecord = auditrecord;
-                _context.AuditRecord.Remove(AuditRecord);
+                _context.AuditRecords.Remove(AuditRecord);
                 await _context.SaveChangesAsync();
             }
 
