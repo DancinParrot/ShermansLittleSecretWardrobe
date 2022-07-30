@@ -8,18 +8,18 @@ namespace ShermansLittleSecretWardrobe.Pages
     {
 
         public bool hasData = false;
-        public string firstName = "";
-        public string lastName = "";
+        public string name = "";
         public string message = "";
+        public string email = "";
         public void OnGet()
         { }
 
         public void OnPost()
         {
             hasData = true;
-            firstName = Request.Form["firstname"];
-            lastName = Request.Form["lastname"];
+            name = Request.Form["name"];
             message = Request.Form["subject"];
+            email = Request.Form["email"];
         }
     }
 }
