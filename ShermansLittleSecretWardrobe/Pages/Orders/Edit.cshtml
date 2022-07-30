@@ -25,6 +25,11 @@
                 <span asp-validation-for="Order.UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Order.ProductId" class="control-label"></label>
+                <input asp-for="Order.ProductId" class="form-control" />
+                <span asp-validation-for="Order.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Order.ShippingId" class="control-label"></label>
                 <input asp-for="Order.ShippingId" class="form-control" />
                 <span asp-validation-for="Order.ShippingId" class="text-danger"></span>
@@ -43,6 +48,11 @@
                 <label asp-for="Order.PaymentAmount" class="control-label"></label>
                 <input asp-for="Order.PaymentAmount" class="form-control" />
                 <span asp-validation-for="Order.PaymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ReferenceId" class="control-label"></label>
+                <input asp-for="Order.ReferenceId" class="form-control" />
+                <span asp-validation-for="Order.ReferenceId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
