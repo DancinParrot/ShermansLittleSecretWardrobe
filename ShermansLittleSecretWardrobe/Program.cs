@@ -30,6 +30,7 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Roles", "RequireAdministratorRole");
     options.Conventions.AuthorizePage("/Admin", "RequireAdministratorRole");
+    options.Conventions.AuthorizeFolder("/Orders", "RequireAuthentication");
 });
 
 /*builder.Services.AddRazorPages();*/
@@ -65,6 +66,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdministratorRole",
          policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RequireAuthentication",
+        policy => policy.RequireRole("User"));
 });
 /*builder.Services.AddAuthorization();*/
 

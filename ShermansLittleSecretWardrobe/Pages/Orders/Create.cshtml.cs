@@ -116,7 +116,7 @@ namespace ShermansLittleSecretWardrobe.Pages.Orders
             }
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Receipt", "Order", new { orderId = Order.OrderId });
         }
     }
 }
