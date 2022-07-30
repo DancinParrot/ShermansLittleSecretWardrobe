@@ -13,7 +13,6 @@ namespace ShermansLittleSecretWardrobe.Data
         }
         public DbSet<ShermansLittleSecretWardrobe.Models.Product>? Product { get; set; }
         public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,5 +47,11 @@ namespace ShermansLittleSecretWardrobe.Data
                     UserId = adminID
                 });
         }
+
+        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Order>? Order { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Cart>? Cart { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.CartItem>? CartItem { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles{ get; set; }
     }
 }

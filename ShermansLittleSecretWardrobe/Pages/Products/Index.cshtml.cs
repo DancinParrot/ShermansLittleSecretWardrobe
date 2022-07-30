@@ -24,12 +24,16 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
         }
 
         public IList<Product> Product { get;set; } = default!;
+
+        // For search function
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? SearchTitle { get; set; }
 
+        // For Cart Creation and Adding Item to Cart
+        public Cart Cart { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.Product != null)
@@ -55,6 +59,11 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
                     await FileManagement.RetrieveFileFromStorage(product, "product-images", _webEnv);
                 }
             }
+        }
+
+        public async Task OnPostAsync()
+        {
+
         }
     }
 }

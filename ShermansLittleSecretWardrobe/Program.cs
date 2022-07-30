@@ -16,7 +16,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
 //  .AddEntityFrameworkStores<ApplicationDbContext>();
+
+  //  .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 // Add services to the container.
 
@@ -37,10 +41,25 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.AllowedForNewUsers = true;
 });
 
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    // Changed requiredlength to 8
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+
 builder.Services.AddIdentity<IdentityUser, ApplicationRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
+
 
 /*builder.Services.AddAuthorization(options =>
 {
