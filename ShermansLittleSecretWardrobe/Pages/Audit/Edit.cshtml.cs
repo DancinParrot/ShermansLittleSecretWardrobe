@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Audit
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;

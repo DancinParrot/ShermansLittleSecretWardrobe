@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Roles
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;

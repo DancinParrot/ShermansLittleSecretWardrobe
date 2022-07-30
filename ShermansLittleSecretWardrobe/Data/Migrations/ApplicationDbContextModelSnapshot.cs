@@ -255,12 +255,11 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("Audit_ID");
 
-                    b.ToTable("AuditRecord");
+                    b.ToTable("AuditRecord", (string)null);
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Cart", b =>
                 {
-
                     b.Property<int>("CartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -273,22 +272,8 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("CartId");
 
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-
-                    b.ToTable("Cart");
+                    b.ToTable("Cart", (string)null);
                 });
-
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItem", b =>
                 {
@@ -309,7 +294,7 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItem", (string)null);
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Order", b =>
@@ -359,7 +344,20 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                             b.Property<int>("ID")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int");
+                    b.ToTable("Order", (string)null);
+                });
 
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                             b.Property<int>("CartID")
@@ -543,6 +541,16 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                             b.Navigation("Product");
                         });
                 });
+                
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
         }
     }
 }
