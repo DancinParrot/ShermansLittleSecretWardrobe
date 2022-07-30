@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ShermansLittleSecretWardrobe.Pages.Products
 {
-    [Authorize(Roles = "Admin, Users")]
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;

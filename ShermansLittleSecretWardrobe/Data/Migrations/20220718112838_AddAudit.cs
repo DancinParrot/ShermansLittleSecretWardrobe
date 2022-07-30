@@ -8,18 +8,18 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            /*migrationBuilder.RenameColumn(
                 name: "KeyMovieFieldID",
                 table: "AuditRecord",
-                newName: "ProductID");
+                newName: "ProductID");*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            /*migrationBuilder.RenameColumn(
                 name: "ProductID",
                 table: "AuditRecord",
-                newName: "KeyMovieFieldID");
+                newName: "KeyMovieFieldID");*/
         }
     }
 }
