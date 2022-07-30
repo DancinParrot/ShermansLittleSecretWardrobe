@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ShermansLittleSecretWardrobe.Data;
 using ShermansLittleSecretWardrobe.Models;
 using ShermansLittleSecretWardrobe.Utils;
 using Microsoft.AspNetCore.Authorization;

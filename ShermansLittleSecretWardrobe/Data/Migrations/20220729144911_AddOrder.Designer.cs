@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShermansLittleSecretWardrobe.Data;
 
@@ -11,9 +12,10 @@ using ShermansLittleSecretWardrobe.Data;
 namespace ShermansLittleSecretWardrobe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220729144911_AddOrder")]
+    partial class AddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,45 +258,6 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.HasKey("Audit_ID");
 
                     b.ToTable("AuditRecord");
-                });
-
-            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Cart", b =>
-                {
-                    b.Property<int>("CartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CartId");
-
-                    b.ToTable("Cart");
-                });
-
-            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItem", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"), 1L, 1);
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemId");
-
-                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Order", b =>
