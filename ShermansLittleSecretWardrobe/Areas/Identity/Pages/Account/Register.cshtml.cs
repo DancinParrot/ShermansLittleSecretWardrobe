@@ -30,13 +30,16 @@ namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly ShermansLittleSecretWardrobe.Data.ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -121,6 +125,11 @@ namespace ShermansLittleSecretWardrobe.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    var userName = await _userManager.GetUserNameAsync(user);
+                    IdentityUser AppUser = user as IdentityUser;
+                    ApplicationRole AppRole = await _roleManager.FindByNameAsync("Users");
+                    IdentityResult roleResult = await _userManager.AddToRoleAsync(AppUser, AppRole.Name);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
