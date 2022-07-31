@@ -14,6 +14,15 @@ namespace ShermansLittleSecretWardrobe.Data
         public DbSet<ShermansLittleSecretWardrobe.Models.Product>? Product { get; set; }
         //public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
 
+        
+
+        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Order>? Order { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Cart>? Cart { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.CartItem>? CartItem { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.Shipping>? Shipping { get; set; }
+        public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -46,14 +55,16 @@ namespace ShermansLittleSecretWardrobe.Data
                     RoleId = adminID,
                     UserId = adminID
                 });
+            builder.Entity<ApplicationRole>().HasData(
+                new ApplicationRole()
+                {
+                    Name = "Users",
+                    NormalizedName = "USERS",
+                    CreatedDate = DateTime.Now,
+                    IPAddress = "127.0.0.2",
+                    Description = "Basic User Role"
+                });
         }
-
-        public DbSet<ShermansLittleSecretWardrobe.Models.ApplicationRole>? ApplicationRoles { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.Order>? Order { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.Cart>? Cart { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.CartItem>? CartItem { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.Shipping>? Shipping { get; set; }
-        public DbSet<ShermansLittleSecretWardrobe.Models.AuditRecord>? AuditRecord { get; set; }
 
     }
 }
