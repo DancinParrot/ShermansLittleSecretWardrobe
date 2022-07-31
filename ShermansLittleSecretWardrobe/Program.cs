@@ -26,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Apply authorisation policies to Folders and Pages
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Roles", "RequireAdministratorRole");
@@ -62,6 +63,7 @@ builder.Services.AddIdentity<IdentityUser, ApplicationRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
+// Create authorisation policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdministratorRole",
