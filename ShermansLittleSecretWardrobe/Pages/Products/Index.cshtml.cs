@@ -34,21 +34,26 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
 
         // For Cart Creation and Adding Item to Cart
         public Cart Cart { get; set; }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (_context.Product != null)
             {
                 var products = from p in _context.Product
                              select p;
 
-                if (!string.IsNullOrEmpty(SearchString))
+                if (User.Identity.IsAuthenticated)
                 {
-                    products = products.Where(s => s.Category.Equals(SearchString));
-                }
 
-                if (!string.IsNullOrEmpty(SearchTitle))
-                {
-                    products = products.Where(s => s.Title.Contains(SearchTitle));
+                    if (!string.IsNullOrEmpty(SearchString))
+                    {
+                        products = products.Where(s => s.Category.Equals(SearchString));
+                    }
+
+                    if (!string.IsNullOrEmpty(SearchTitle))
+                    {
+                        products = products.Where(s => s.Title.Contains(SearchTitle));
+                    }
+
                 }
 
                 Product = await products.ToListAsync();
@@ -59,6 +64,8 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
                     await FileManagement.RetrieveFileFromStorage(product, "product-images", _webEnv);
                 }
             }
+
+            return Page();
         }
 
         public async Task OnPostAsync()
