@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ShermansLittleSecretWardrobe.Pages
 {
-    [Authorize(Roles = "User, Admin")]
+    [Authorize(Roles = "Users, Admin")]
     public class RatingsModel : PageModel
     {
         private readonly ILogger<RatingsModel> _logger;
