@@ -110,6 +110,24 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "01b75467-81e0-45e9-9665-e29d67cf5729",
+                            Email = "RealAdmin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "REALADMIN@GMAIL.COM",
+                            NormalizedUserName = "REALADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAELsLSuYIcaEKI5xy2AthUwdFExCO+yE1hHVMY4QZYTscQ3ugnUR/EmVHHOR630oQRw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a1360431-725f-4612-a355-1c6813559369",
+                            TwoFactorEnabled = false,
+                            UserName = "RealAdmin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -172,6 +190,13 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -229,6 +254,28 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "f660e93d-bf15-49fe-b9e2-6c72f579e29a",
+                            CreatedDate = new DateTime(2022, 7, 31, 15, 37, 9, 989, DateTimeKind.Local).AddTicks(5588),
+                            Description = "Administrator role (Authorized to do anything)",
+                            IPAddress = "127.0.0.1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a9aab020-5f31-4d2f-b5a2-a3a1dd9c64cf",
+                            ConcurrencyStamp = "5b4e9ccd-abaf-4416-a158-42779723ed79",
+                            CreatedDate = new DateTime(2022, 7, 31, 15, 37, 9, 992, DateTimeKind.Local).AddTicks(7944),
+                            Description = "Basic User Role",
+                            IPAddress = "127.0.0.2",
+                            Name = "Users",
+                            NormalizedName = "USERS"
+                        });
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.AuditRecord", b =>
@@ -255,7 +302,7 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("Audit_ID");
 
-                    b.ToTable("AuditRecord", (string)null);
+                    b.ToTable("AuditRecord");
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Cart", b =>
@@ -272,7 +319,7 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Cart", (string)null);
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItem", b =>
@@ -294,7 +341,7 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("CartItem", (string)null);
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Order", b =>
@@ -338,13 +385,6 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("Order");
-
-                    modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItems", b =>
-                        {
-                            b.Property<int>("ID")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
@@ -358,191 +398,97 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                            b.Property<int>("CartID")
-                                .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                            b.Property<int>("ProductID")
-                                .HasColumnType("int");
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                            b.Property<int>("Quantity")
-                                .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(5,2)");
 
-                            b.HasKey("ID");
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
 
-                            b.HasIndex("CartID");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                            b.HasIndex("ProductID");
+                    b.HasKey("ProductId");
 
-                            b.ToTable("CartItems");
-
-                        });
-
-                    modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
-                        {
-                            b.Property<int>("ProductId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
-
-                            b.Property<string>("Category")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b.Property<string>("Description")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b.Property<string>("Image")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b.Property<decimal>("Price")
-                                .HasColumnType("decimal(5,2)");
-
-                            b.Property<DateTime>("ReleaseDate")
-                                .HasColumnType("datetime2");
-
-                            b.Property<string>("Title")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.HasKey("ProductId");
-
-                            b.ToTable("Product");
-                        });
-
-                    modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Shipping", b =>
-                        {
-                            b.Property<int>("ShippingId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShippingId"), 1L, 1);
-
-                            b.Property<string>("AddressLine1")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("AddressLine2")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("Country")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.Property<string>("PhoneNumber")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b.Property<string>("State")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
-
-                            b.HasKey("ShippingId");
-
-                            b.ToTable("Shipping");
-                        });
-
-                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                        {
-                            b.HasOne("ShermansLittleSecretWardrobe.Models.ApplicationRole", null)
-                                .WithMany()
-                                .HasForeignKey("RoleId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                        {
-                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                                .WithMany()
-                                .HasForeignKey("UserId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                        {
-                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                                .WithMany()
-                                .HasForeignKey("UserId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                        {
-                            b.HasOne("ShermansLittleSecretWardrobe.Models.ApplicationRole", null)
-                                .WithMany()
-                                .HasForeignKey("RoleId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                                .WithMany()
-                                .HasForeignKey("UserId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                        {
-                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                                .WithMany()
-                                .HasForeignKey("UserId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItems", b =>
-                        {
-                            b.HasOne("ShermansLittleSecretWardrobe.Models.Cart", "Cart")
-                                .WithMany()
-                                .HasForeignKey("CartID")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ShermansLittleSecretWardrobe.Models.Product", "Product")
-                                .WithMany()
-                                .HasForeignKey("ProductID")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.Navigation("Cart");
-
-                            b.Navigation("Product");
-                        });
+                    b.ToTable("Product");
                 });
-                
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Shipping", b =>
+                {
+                    b.Property<int>("ShippingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShippingId"), 1L, 1);
+
+                    b.Property<string>("AddressLine1")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ShippingId");
+
+                    b.ToTable("Shipping");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("ShermansLittleSecretWardrobe.Models.ApplicationRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
@@ -551,7 +497,39 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("ShermansLittleSecretWardrobe.Models.ApplicationRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+#pragma warning restore 612, 618
         }
     }
 }
-    

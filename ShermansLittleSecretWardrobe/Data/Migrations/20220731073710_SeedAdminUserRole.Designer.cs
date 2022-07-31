@@ -12,14 +12,14 @@ using ShermansLittleSecretWardrobe.Data;
 namespace ShermansLittleSecretWardrobe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220729061959_SeedAdminData")]
-    partial class SeedAdminData
+    [Migration("20220731073710_SeedAdminUserRole")]
+    partial class SeedAdminUserRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -118,15 +118,15 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "09855c32-e3fc-4534-b080-0eee23db1cbd",
+                            ConcurrencyStamp = "01b75467-81e0-45e9-9665-e29d67cf5729",
                             Email = "RealAdmin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "REALADMIN@GMAIL.COM",
                             NormalizedUserName = "REALADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEv264N8Et2tUfM8TSe2y1/TPiuN4cFBk/upZoMmnYu/+8lVr1X7WpoPJrgzFEasSA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELsLSuYIcaEKI5xy2AthUwdFExCO+yE1hHVMY4QZYTscQ3ugnUR/EmVHHOR630oQRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e12ba211-bbd9-4bd0-ba52-2f88a01a7480",
+                            SecurityStamp = "a1360431-725f-4612-a355-1c6813559369",
                             TwoFactorEnabled = false,
                             UserName = "RealAdmin@gmail.com"
                         });
@@ -261,12 +261,22 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "664bc8eb-603b-4b74-a0e3-555aa3df6bb0",
-                            CreatedDate = new DateTime(2022, 7, 29, 14, 19, 58, 858, DateTimeKind.Local).AddTicks(753),
+                            ConcurrencyStamp = "f660e93d-bf15-49fe-b9e2-6c72f579e29a",
+                            CreatedDate = new DateTime(2022, 7, 31, 15, 37, 9, 989, DateTimeKind.Local).AddTicks(5588),
                             Description = "Administrator role (Authorized to do anything)",
                             IPAddress = "127.0.0.1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a9aab020-5f31-4d2f-b5a2-a3a1dd9c64cf",
+                            ConcurrencyStamp = "5b4e9ccd-abaf-4416-a158-42779723ed79",
+                            CreatedDate = new DateTime(2022, 7, 31, 15, 37, 9, 992, DateTimeKind.Local).AddTicks(7944),
+                            Description = "Basic User Role",
+                            IPAddress = "127.0.0.2",
+                            Name = "Users",
+                            NormalizedName = "USERS"
                         });
                 });
 
@@ -295,6 +305,88 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.HasKey("Audit_ID");
 
                     b.ToTable("AuditRecord");
+                });
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.CartItem", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("CartItem");
+                });
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<DateTime?>("CreationTimestamp")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("PaymentAmount")
+                        .IsRequired()
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReferenceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShippingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Product", b =>
@@ -332,6 +424,61 @@ namespace ShermansLittleSecretWardrobe.Data.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ShermansLittleSecretWardrobe.Models.Shipping", b =>
+                {
+                    b.Property<int>("ShippingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShippingId"), 1L, 1);
+
+                    b.Property<string>("AddressLine1")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ShippingId");
+
+                    b.ToTable("Shipping");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
