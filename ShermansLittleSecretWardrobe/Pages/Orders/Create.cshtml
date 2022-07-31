@@ -96,50 +96,50 @@
             </div>
             <p>Once your order is confirmed, your item will be shipped out within the next 3-4 business days.</p>
         </form>
-        <div>
-            <h1>Product pending Payment</h1>
-            <table class="table text-center">
-                <thead>
-                    <tr>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Product.Title)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Product.Category)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Product.Price)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Product.Description)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>
-                            <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="100" height="100" />
-                        </th>
-                        <th>
-                            @Html.DisplayFor(model => model.Product.Title)
-                        </th>
-                        <th>
-                            @Html.DisplayFor(model => model.Product.Category)
-                        </th>
-                        <th>
-                            @Html.DisplayFor(model => model.Product.Price)
-                        </th>
-                        <th>
-                            @Html.DisplayFor(model => model.Product.Description)
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
+</div>
+<div class="row">
+    <h1>Product pending Payment</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="100" height="100" />
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Category)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Description)
+                </th>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <div>
