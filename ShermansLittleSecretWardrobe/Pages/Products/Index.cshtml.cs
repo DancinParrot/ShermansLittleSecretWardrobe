@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +31,9 @@ namespace ShermansLittleSecretWardrobe.Pages.Products
         public string? SearchString { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        [RegularExpression(@"^[a-zA-Z0-9-,.'\s]+$", ErrorMessage = "Please only enter alphanumerical, whitespace, and special characters of \",.'\" only")]
         public string? SearchTitle { get; set; }
 
-        // For Cart Creation and Adding Item to Cart
-        public Cart Cart { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             if (_context.Product != null)

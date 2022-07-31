@@ -25,6 +25,8 @@
        <div style="display: flex; flex-direction: row;">
             <p>Title: <input style="max-height: 100%;" type="text" asp-for="SearchTitle" />
                 <input class="btn btn-primary" type="submit" value="Search" asp-for="SearchTitle" />
+                <br />
+                <span asp-validation-for="SearchTitle" class="text-danger"></span>
             </p>
         </div>
     </form>
