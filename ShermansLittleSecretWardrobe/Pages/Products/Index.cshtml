@@ -1,0 +1,127 @@
+﻿@page "{searchString?}"
+@model ShermansLittleSecretWardrobe.Pages.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+@*Reference: https://www.youtube.com/watch?v=9lJF47kFRcU*@
+
+@if(User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<div class="text-center">
+    <h1 class="display-4">View our Collection</h1>
+</div>
+
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="row">
+    <form class="col-sm">
+       <div style="display: flex; flex-direction: row;">
+            <p>Title: <input style="max-height: 100%;" type="text" asp-for="SearchTitle" />
+                <input class="btn btn-primary" type="submit" value="Search" asp-for="SearchTitle" />
+                <br />
+                <span asp-validation-for="SearchTitle" class="text-danger"></span>
+            </p>
+        </div>
+    </form>
+
+    <form class="col-sm">
+        <div style="display: flex; justify-content: flex-end;">
+            <select id="category" class="form-control" style="width: 50%;" asp-for="SearchString" onchange="javascript:this.form.submit()">
+                <option value="" disabled selected>Fiter by category</option>
+                <option value="T-Shirt">T-Shirt</option>
+                <option value="PoloShirt">Polo Shirt</option>
+                <option value="CasualShirt">Casual Shirt</option>
+                <option value="Sweater">Sweater</option>
+            </select>
+        </div>
+    </form>
+</div>
+
+}
+
+<div class="card-columns">
+    @foreach (var item in Model.Product) 
+    {
+        <div class="card">
+            <div class="card-img" style="background-image: url('data/@item.Image');"></div>
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+            </div>
+            <div class="card-footer">
+@*                <form method="post">
+                    <button type="submit" class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">Submit</button>
+                </form>*@
+                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">View</a>
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-page="../Orders/Create" asp-route-productId="@item.ProductId">Buy</a>
+                }
+                @if(User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+@* Backup
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model.Product) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@

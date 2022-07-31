@@ -1,0 +1,41 @@
+﻿@page
+@model ShermansLittleSecretWardrobe.Pages.AdminModel
+@{
+}
+
+@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<h1>Admin Dashboard</h1>
+
+<div class="card-columns">
+    <div class="card">
+        <div class="card-img" style="background-image: url('data/inventory.jpg');"></div>
+        <div class="card-body">
+            <h5 class="card-title">Manage Inventory</h5>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-page="/Products/Index">View</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-img" style="background-image: url('data/inventory.jpg');"></div>
+        <div class="card-body">
+            <h5 class="card-title">Manage Roles</h5>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-page="/Roles/Index">View</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-img" style="background-image: url('data/inventory.jpg');"></div>
+        <div class="card-body">
+            <h5 class="card-title">Manage Orders</h5>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" asp-page="/Orders/Index">View</a>
+        </div>
+    </div>
+</div>
+

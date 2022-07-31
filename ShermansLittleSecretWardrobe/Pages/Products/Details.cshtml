@@ -1,0 +1,107 @@
+﻿@page "{id:int?}"
+@model ShermansLittleSecretWardrobe.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="300px" />
+        </div>
+        <div class="col-sm">
+            <div class="row">
+                <h6>Name:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Title</p>
+            </div>
+            <div class="row">
+                <h6>Category:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Category</p>
+            </div>
+            <div class="row">
+                <h6>Price:&nbsp;&nbsp;</h6>
+                <p>$@Model.Product.Price</p>
+            </div>
+            <div class="row">
+                <h6>Description:&nbsp;&nbsp;</h6>
+                <p>@Model.Product.Description</p>
+            </div>
+            <div class="row">
+                @if(User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-page="../Orders/Create" asp-route-productId="@Model.Product.ProductId">Buy</a>
+                }
+                @if(User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@Model.Product.ProductId">Delete</a>
+                }
+@*                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form method="post">
+                        <div>
+                            <label asp-for="Input.Quantity">Quantity&nbsp;&nbsp;</label>
+                            <input asp-for="Input.Quantity" type="text">
+                            <p>&nbsp;</p>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                }*@
+            </div>
+        </div>
+    </div>
+@*    @if (SignInManager.IsSignedIn(User))
+    {
+        @await Component.InvokeAsync("MiniCart")
+    }*@
+</div>
+
+@*<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Price)
+        </dd>
+        <dd class="col-sm-2">
+            <label class="control-label">Product Image</label>
+        </dd>
+        <dd class="col-sm-10">
+            <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="300px" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Product?.ProductId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>*@

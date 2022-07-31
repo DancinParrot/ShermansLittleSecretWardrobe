@@ -1,0 +1,11 @@
+﻿@page
+@model RatingsModel
+@{
+    ViewData["Title"] = "Ratings";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="powr-product-reviews" id="3f2700c8_1659265647"></div><script src="https://www.powr.io/powr.js?platform=html"></script>
+}

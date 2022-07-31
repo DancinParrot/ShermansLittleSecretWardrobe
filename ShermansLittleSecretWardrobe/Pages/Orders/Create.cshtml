@@ -1,0 +1,158 @@
+﻿@page
+@model ShermansLittleSecretWardrobe.Pages.Orders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-route-referenceId="@Model.ReferenceId" asp-route-productId="@Model.Product.ProductId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Shipping.FirstName" class="control-label"></label>
+                <input asp-for="Shipping.FirstName" class="form-control" />
+                <span asp-validation-for="Shipping.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.LastName" class="control-label"></label>
+                <input asp-for="Shipping.LastName" class="form-control" />
+                <span asp-validation-for="Shipping.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.AddressLine1" class="control-label"></label>
+                <input asp-for="Shipping.AddressLine1" class="form-control" />
+                <span asp-validation-for="Shipping.AddressLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.AddressLine2" class="control-label"></label>
+                <input asp-for="Shipping.AddressLine2" class="form-control" />
+                <span asp-validation-for="Shipping.AddressLine2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.PostalCode" class="control-label"></label>
+                <input asp-for="Shipping.PostalCode" class="form-control" />
+                <span asp-validation-for="Shipping.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.City" class="control-label"></label>
+                <input asp-for="Shipping.City" class="form-control" />
+                <span asp-validation-for="Shipping.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.State" class="control-label"></label>
+                <input asp-for="Shipping.State" class="form-control" />
+                <span asp-validation-for="Shipping.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.Country" class="control-label"></label>
+                <input asp-for="Shipping.Country" class="form-control" />
+                <span asp-validation-for="Shipping.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shipping.PhoneNumber" class="control-label"></label>
+                <input asp-for="Shipping.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Shipping.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.PaymentMethod" class="control-label"></label>
+                <select asp-for="Order.PaymentMethod" class="form-control" id="payment-dropdown">
+                    <option value="" disabled selected>Choose a payment method</option>
+                    <option value="Paynow">Paynow</option>
+                </select>
+                <span asp-validation-for="Order.PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.PaymentAmount" class="control-label"></label>
+                <input value="$@Model.Product.Price" class="form-control" id="payment-amt" disabled />
+            </div>
+            <div class="form-group" id="payment-form" style="display: none;">
+                <h3>Make your Payment here via Paynow!</h3>
+                <div id="qrcode" style="margin-bottom: 10px;"></div>
+                <script>
+                    var tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate()+1);
+                    var dd = String(tomorrow.getDate()).padStart(2, '0');
+                    var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = tomorrow.getFullYear();
+
+                    tomorrow = yyyy + mm + dd;
+                    console.log('@Model.ReferenceId');
+                    const opts = {
+                        uen: '+6580440858', // Merchant's Paynow ID
+                        editable: 0, // Amount non-editable
+                        expiry: tomorrow, // Expiry date of today
+                        amount: @Model.Product.Price,
+                        refNumber: '@Model.ReferenceId' // Unique Guid for each order
+                    };
+                </script>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <p>Once your order is confirmed, your item will be shipped out within the next 3-4 business days.</p>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <h1>Product pending Payment</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Description)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    <img src="~/data/@Url.Content(@Model.Product.Image)" alt="Existing Image" width="100" height="100" />
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Category)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => model.Product.Description)
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>      
+    <script type="text/javascript" src="~/lib/davidshimjs-qrcodejs/qrcode.js"></script>
+    <script type="text/javascript" src="~/js/paynow.js"></script>
+    <script type="text/javascript" src="~/js/qr.js"></script>
+    <script></script>
+
+}
