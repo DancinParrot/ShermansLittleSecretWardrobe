@@ -30,14 +30,17 @@ body {
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ratings">Rating</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Products/Index">Products</a>
                         </li>
-                        <li class="nav-item">
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Ratings">Rating</a>
+                            </li>
+                            <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Feedback">Feedback</a>
-                        </li>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

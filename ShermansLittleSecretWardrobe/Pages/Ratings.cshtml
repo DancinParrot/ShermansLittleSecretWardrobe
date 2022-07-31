@@ -1,8 +1,11 @@
 ﻿@page
-@model PrivacyModel
+@model RatingsModel
 @{
     ViewData["Title"] = "Ratings";
 }
 <h1>@ViewData["Title"]</h1>
 
-<div class="powr-star-ratings" id="ec44b94a_1659210108"></div><script src="https://www.powr.io/powr.js?platform=html"></script>
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="powr-star-ratings" id="ec44b94a_1659210108"></div><script src="https://www.powr.io/powr.js?platform=html"></script>
+}

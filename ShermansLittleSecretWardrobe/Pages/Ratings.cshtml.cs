@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ShermansLittleSecretWardrobe.Pages
 {
-    public class PrivacyModel : PageModel
+    [Authorize(Roles = "User, Admin")]
+    public class RatingsModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<RatingsModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public RatingsModel(ILogger<RatingsModel> logger)
         {
             _logger = logger;
         }

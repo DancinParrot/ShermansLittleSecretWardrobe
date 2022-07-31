@@ -15,8 +15,16 @@ namespace ShermansLittleSecretWardrobe.Utils
             var blobContainerClient = new BlobContainerClient(blobStorageConnectionString, blobStorageContainerName);
             var blob = blobContainerClient.GetBlobClient(blobName); // Create a new BlobClient object by appending blobName to the end of Uri. 
             fileStream.Position = 0; // Stream is one way, data is written till the end, so position need to be reset to the start for pointer to read
+
             // Upload the file
-            await blob.UploadAsync(fileStream, overwrite: true);
+            try
+            {
+                await blob.UploadAsync(fileStream, overwrite: true);
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return await Task.FromResult(true);
         }
@@ -33,8 +41,16 @@ namespace ShermansLittleSecretWardrobe.Utils
             string localFilePath = Path.Combine(localPath, fileName);
 
             var blob = blobContainerClient.GetBlobClient(fileName); // Create a new BlobClient object by appending blobName to the end of Uri. 
+
             // Download the blob's contents and save it to a file
-            await blob.DownloadToAsync(localFilePath);
+            try
+            {
+                await blob.DownloadToAsync(localFilePath);
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return await Task.FromResult(true);
         }
@@ -50,8 +66,16 @@ namespace ShermansLittleSecretWardrobe.Utils
 
             var blob = blobContainerClient.GetBlobClient(fileName); // Find the blob on Azure Blob Storage
 
+
             // Delete the blob from Azure Blob Storage
-            await blob.DeleteIfExistsAsync();
+            try
+            {
+                await blob.DeleteIfExistsAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             // Delete the image from webroot's data folder
             if (File.Exists(localFilePath))
